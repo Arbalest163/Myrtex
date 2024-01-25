@@ -1,0 +1,51 @@
+.app-modal-background{
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.app-modal-content{
+    background-color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    z-index: 10000;
+}
+
+body.app-modal-open {
+    overflow: hidden;
+}
+
+.app-modal-header{
+    display: flex;
+    justify-items: center;
+}
+.app-modal-title{
+    font-size: 25px;
+    margin: 15px;
+}
+
+.btn-close{
+    position: relative;
+    right: 3px;
+    top: 3px;
+}

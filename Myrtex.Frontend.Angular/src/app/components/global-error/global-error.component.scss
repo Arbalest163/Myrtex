@@ -1,0 +1,16 @@
+.global-error{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    background-color: red;
+    color: white;
+    position: relative;
+}
+
+.button-X{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: black;
+}

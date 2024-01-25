@@ -1,0 +1,7 @@
+<div class="modal-body">
+    Вы уверены, что хотите удалить <span>{{employee?.lastName}}</span> <span>{{employee?.firstName}}</span> <span>{{employee?.middleName}}</span>?
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="deleteEmployee()">Удалить</button>
+    <button type="button" class="btn btn-secondary" (click)="modalService.close()">Отменить</button>
+</div>

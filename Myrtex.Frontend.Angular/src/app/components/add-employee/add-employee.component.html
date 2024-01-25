@@ -1,0 +1,60 @@
+<div class="modal-body">
+    <form [formGroup]="form" class="form-content">
+        <input
+            class="form-control" 
+            type="text"
+            placeholder="Имя"
+            formControlName="firstName"
+            appFocus>
+        <p *ngIf="fisrtName.errors?.minlength && fisrtName.touched">
+            Минимальное количество символов {{fisrtName.errors?.minlength.requiredLength}}
+        </p>
+        <p *ngIf="fisrtName.errors?.required && fisrtName.touched">
+            Поле обязательно для заполнения
+        </p>
+        <input
+            class="form-control" 
+            type="text"
+            placeholder="Фамилия"
+            formControlName="lastName">
+        <p *ngIf="lastName.errors?.minlength && lastName.touched">
+            Минимальное количество символов {{lastName.errors?.minlength.requiredLength}}
+        </p>
+        <p *ngIf="lastName.errors?.required && lastName.touched">
+            Поле обязательно для заполнения
+        </p>
+        <input
+            class="form-control" 
+            type="text"
+            placeholder="Отчество"
+            formControlName="middleName">
+        <p *ngIf="middleName.value.length !== 0 && middleName.errors?.minlength">
+            Минимальное количество символов {{middleName.errors?.minlength.requiredLength}}
+        </p>
+        <input
+            class="form-control" 
+            type="date"
+            placeholder="Дата рождения"
+            formControlName="birthDate">
+        <p *ngIf="birthDate.errors?.required && birthDate.touched">
+            Дата рождения обязательна для заполнения
+        </p>
+        <select class="form-control" formControlName="departmentId">
+            <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+        </select>
+        <p *ngIf="departmentId.errors?.required && departmentId.touched">
+            Департамент обязателен для заполнения
+        </p>
+        <input
+            class="form-control"
+            type="number"
+            min="0" step="100"
+            placeholder="Заработная плата"
+            formControlName="salary">
+    </form>   
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="submit()">Добавить</button>
+  <button type="button" class="btn btn-secondary" (click)="modalService.close()">Отменить</button>
+</div>
+

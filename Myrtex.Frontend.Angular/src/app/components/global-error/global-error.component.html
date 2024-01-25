@@ -1,0 +1,5 @@
+<div class="global-error" *ngIf="errorService.error$ | async as error">
+    {{ error }}
+
+    <button type="button" class="btn-close" aria-label="Закрыть" (click)="errorService.clear()"></button>
+</div>

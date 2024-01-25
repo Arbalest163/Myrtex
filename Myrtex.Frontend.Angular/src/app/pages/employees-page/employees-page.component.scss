@@ -1,0 +1,13 @@
+.fixed-height-row {
+    height: 60px;
+  }
+
+  .table th:hover {
+    cursor: pointer;
+  }
+
+  .table th.active {
+    outline:3px solid #007bff;
+    outline-offset:-3px;
+  }
+  

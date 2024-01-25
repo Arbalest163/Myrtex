@@ -1,0 +1,25 @@
+<div>
+    <div class="block-navigation">
+        <div class="navigation">
+            <ul>
+                <li [ngClass]="{'active': activeItemIndex === 0}" (click)="setActiveIndex(0)">
+                    <a routerLink="/about">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="text">О компании</span>
+                    </a>
+                </li>
+                <li [ngClass]="{'active': activeItemIndex === 1}" (click)="setActiveIndex(1)">
+                    <a routerLink="/employees">
+                        <span class="icon">
+                            <ion-icon name="accessibility-outline"></ion-icon>
+                        </span>
+                        <span class="text">Сотрудники</span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </div>
+    </div>
+</div>
