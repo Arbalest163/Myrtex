@@ -9,9 +9,8 @@ public class EmployeeToEditView : IMapWith<Employee>
     public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string MidleName { get; set; }
-    public DepartmentToEditDto Department { get; set; }
-    public DepartmentToEditDto[] AvailableDepartments { get; set; }
+    public string MiddleName { get; set; }
+    public int DepartmentId { get; set; }
     public string DateOfEmployment { get; set; }
     public string Salary { get; set; }
     public void Mapping(Profile profile)
@@ -19,8 +18,8 @@ public class EmployeeToEditView : IMapWith<Employee>
         profile.CreateMap<Employee, EmployeeToEditView>()
             .ForMember(e => e.FirstName, opt => opt.MapFrom(e => e.FirstName))
             .ForMember(e => e.LastName, opt => opt.MapFrom(e => e.LastName))
-            .ForMember(e => e.MidleName, opt => opt.MapFrom(e => e.MiddleName))
-            .ForMember(e => e.Department, opt => opt.MapFrom(e => e.Department))
+            .ForMember(e => e.MiddleName, opt => opt.MapFrom(e => e.MiddleName))
+            .ForMember(e => e.DepartmentId, opt => opt.MapFrom(e => e.Department.Id))
             .ForMember(e => e.DateOfEmployment, opt => opt.MapFrom(e => e.InformationEmployment.DateOfEmployment.ToShortDateString()))
             .ForMember(e => e.Salary, opt => opt.MapFrom(e => e.Salary))
             ;

@@ -29,13 +29,6 @@ public class GetEmployeeToEditQueryHandler : IRequestHandler<GetEmployeeToEditQu
             throw new Exception("Сотрудник не найден"); //TODO Создать кастомные исключения.
         }
 
-        var availableDepartments = await _dbContext.Departments
-           .Where(d => d.Id != employeeView.Department.Id)
-           .ProjectTo<DepartmentToEditDto>(_mapper.ConfigurationProvider)
-           .ToArrayAsync(cancellationToken);
-
-        employeeView.AvailableDepartments = availableDepartments;
-
         return employeeView;
     }
 }

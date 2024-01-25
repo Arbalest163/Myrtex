@@ -26,7 +26,7 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
-            MiddleName = request.MidleName,
+            MiddleName = request.MiddleName,
             BirthDate = request.BirthDate,
             Salary = request.Salary,
             InformationEmployment = new InformationEmployment
