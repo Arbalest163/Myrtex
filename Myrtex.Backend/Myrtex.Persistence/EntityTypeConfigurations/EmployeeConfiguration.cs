@@ -8,7 +8,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.ToTable(nameof(Employee));
+        builder.ToTable("Employees");
 
         builder.HasOne(x => x.InformationEmployment).WithOne(x => x.Employee).HasForeignKey<InformationEmployment>(x => x.Id);
     }
