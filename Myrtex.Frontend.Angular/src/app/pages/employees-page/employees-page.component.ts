@@ -73,12 +73,20 @@ export class EmployeesPageComponent implements OnInit {
   }
 
   loadEmployees() {
+    this.fixTypeSearchText()
     this.employeesService.getEmployees(this.query).subscribe((response) => {
       this.loading = false
       this.employees = response.items
       this.totalPages = response.totalPages
       this.totalItems = response.totalItems
+      if(this.totalPages < this.query.page){
+        this.pageChangeEvent(this.totalPages)
+      }
     });
+  }
+
+  fixTypeSearchText(){
+    this.query.filter.searchInfo.searchText = this.query.filter.searchInfo.searchText.toString()
   }
 
   applyFilter() {
