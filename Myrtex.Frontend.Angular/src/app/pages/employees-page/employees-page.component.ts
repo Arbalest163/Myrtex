@@ -87,7 +87,7 @@ export class EmployeesPageComponent implements OnInit {
   }
 
   fixTypeSearchText(){
-    this.query.filter.searchInfo.searchText = this.query.filter.searchInfo.searchText.toString()
+    this.query.filter.searchInfo.searchText = this.query.filter.searchInfo.searchText?.toString() ?? ''
   }
 
   applyFilter() {
