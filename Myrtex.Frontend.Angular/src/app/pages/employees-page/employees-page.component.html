@@ -1,4 +1,4 @@
-<div *ngIf="!loading" class="container mt-4">
+<div class="container mt-4">
     <div class="filter-container" style="max-width: 300px;">
       <div class="mb-3">
         <label>Выберите поле для фильтрации:</label>
@@ -79,39 +79,41 @@
         <tr class="table-row fixed-height-row table-success">
           <td colspan="7"></td>
           <td>
-            <button class="btn btn-success" (click)="openAddEmployeeModal()">Добавить сотрудника</button>
+            <button class="btn btn-success" [disabled]="loading" (click)="openAddEmployeeModal()">Добавить сотрудника</button>
           </td>
         </tr>
-        <tr *ngFor="let employee of employees | paginate: { itemsPerPage: query.pageSize, currentPage: query.page, totalItems: totalItems }; let i = index" class="table-row fixed-height-row table-light">
-          <td>{{ employee.department }}</td>
-          <td>{{ employee.lastName }}</td>
-          <td>{{ employee.firstName }}</td>
-          <td>{{ employee.middleName }}</td>
-          <td>{{ employee.birthDate }}</td>
-          <td>{{ employee.dateOfEmployment }}</td>
-          <td>{{ employee.salary }}</td>
-          <td>
-            <div class="btn-group" role="group">
-              <button class="btn btn-warning" (click)="openEditEmployeeModal(employee)">Редактировать</button>
-              <button class="btn btn-danger" (click)="openDeleteConfirmationModal(employee)">Удалить</button>
-            </div>
+        <ng-container *ngIf="!loading">
+          <tr *ngFor="let employee of employees | paginate: { itemsPerPage: query.pageSize, currentPage: query.page, totalItems: totalItems }; let i = index" class="table-row fixed-height-row table-light">
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.lastName }}</td>
+            <td>{{ employee.firstName }}</td>
+            <td>{{ employee.middleName }}</td>
+            <td>{{ employee.birthDate }}</td>
+            <td>{{ employee.dateOfEmployment }}</td>
+            <td>{{ employee.salary }}</td>
+            <td>
+              <div class="btn-group" role="group">
+                <button class="btn btn-warning" (click)="openEditEmployeeModal(employee)">Редактировать</button>
+                <button class="btn btn-danger" (click)="openDeleteConfirmationModal(employee)">Удалить</button>
+              </div>
+            </td>
+          </tr>
+          <ng-container *ngIf="employees && employees.length < query.pageSize">
+            <tr *ngFor="let row of createEmptyArray(query.pageSize - employees.length)" class="table-row fixed-height-row">
+                <td colspan="8"></td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <tr *ngIf="loading">
+          <td colspan="8">
+            <app-loading ></app-loading>
           </td>
         </tr>
-        <ng-container *ngIf="employees.length < query.pageSize">
-        <tr *ngFor="let row of createEmptyArray(query.pageSize - employees.length)" class="table-row fixed-height-row">
-            <td colspan="8"></td>
-        </tr>
-      </ng-container>
       </tbody>
     </table>
   </div>
-  
-    <pagination-controls (pageChange)="pageChangeEvent($event)" nextLabel="Следующая" previousLabel="Предыдущая"></pagination-controls>
-  </div>
-  
-  <div *ngIf="loading" class="container mt-4">
-    Loading...
-  </div>
+  <pagination-controls *ngIf="!loading" (pageChange)="pageChangeEvent($event)" nextLabel="Следующая" previousLabel="Предыдущая"></pagination-controls>
+</div>
   
   <app-modal id="add-employee" title="Добавить сотрудника">
     <app-add-employee (employeeAdded)="onSuccess()"></app-add-employee>

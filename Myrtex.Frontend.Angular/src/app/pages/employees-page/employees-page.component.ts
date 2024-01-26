@@ -10,6 +10,7 @@ import { AddEmployeeComponent } from '../../components/add-employee/add-employee
 import { ModalService } from '../../services/modal.service';
 import { DeleteEmployeeComponent } from "../../components/delete-employee/delete-employee.component";
 import { EditEmployeeComponent } from "../../components/edit-employee/edit-employee.component";
+import { LoadingComponent } from "../../components/loading/loading.component";
 
 const CURRENT_PAGE = 'currentPage'
 
@@ -21,7 +22,7 @@ const CURRENT_PAGE = 'currentPage'
     imports: [CommonModule,
         NgxPaginationModule, FormsModule,
         IonicModule, ModalComponent,
-        AddEmployeeComponent, DeleteEmployeeComponent, EditEmployeeComponent]
+        AddEmployeeComponent, DeleteEmployeeComponent, EditEmployeeComponent, LoadingComponent]
 })
 export class EmployeesPageComponent implements OnInit {
   loading = false

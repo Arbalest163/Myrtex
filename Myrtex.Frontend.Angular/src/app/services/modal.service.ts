@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ModalComponent } from '../components/modal/modal.component';
 
 @Injectable({
@@ -29,10 +29,5 @@ export class ModalService {
     close() {
         const modal = this.modals.find(x => x.isOpen);
         modal?.close()
-    }
-
-    isOpen(id: string) : boolean{
-        const modal = this.modals.find(x => x.id === id)
-        return modal?.isOpen ?? false
     }
 }

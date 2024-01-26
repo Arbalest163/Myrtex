@@ -4,20 +4,21 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { IEditEmployee, IEmployee, IGetEmployeesQuery, IPageResponse } from '../models/models';
 import { environment } from '../../environments/environment.development';
 import { ErrorService } from './error.service';
+import { BaseRepositoryService } from './base-repository.service';
 
 const url = `${environment.baseUrl}/employees`
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeesService {
+export class EmployeesService extends BaseRepositoryService{
 
   constructor(
-    private http: HttpClient,
-    private errorService: ErrorService
+    http: HttpClient,
+    errorService: ErrorService
     ) {
-
-    }
+    super(http, errorService);
+  }
 
   getEmployees(query: IGetEmployeesQuery): Observable<IPageResponse<IEmployee>>{
     return this.http
@@ -57,10 +58,5 @@ export class EmployeesService {
       .pipe(
         catchError(this.errorHandler.bind(this))
       )
-  }
-
-  private errorHandler(error: HttpErrorResponse){
-    this.errorService.handle(error.message)
-    return throwError(() => error.message)
   }
 }

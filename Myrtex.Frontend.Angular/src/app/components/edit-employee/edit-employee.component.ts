@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IDepartment, IEditEmployee, IEmployee } from '../../models/models';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../services/modal.service';
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './edit-employee.component.html',
   styleUrl: './edit-employee.component.scss'
 })
-export class EditEmployeeComponent  implements OnInit{
+export class EditEmployeeComponent  implements OnChanges {
   @Input() employee?: IEmployee
   @Output() employeeEdited: EventEmitter<void> = new EventEmitter<void>()
   
@@ -64,48 +64,50 @@ export class EditEmployeeComponent  implements OnInit{
   ){
   
   }
-  
-    ngOnInit(): void {
-      if(this.employee){
-        this.employeesService.getEmployeeToEdit(this.employee?.id).subscribe(response => {
-          this.editEmployee = response
-          this.form.patchValue({
-            firstName: response.firstName,
-            lastName: response.lastName,
-            middleName: response.middleName,
-            birthDate: response.birthDate,
-            departmentId: response.departmentId,
-            salary: response.salary
-          })
-        })
-        this.departmentsService.getDepartments().subscribe(response => {
-          this.departments = response.departments
-          // this.form.patchValue({
-          //   departmentId: this.departments.find(x => x.id == this.editEmployee.departmentId)?.id
-          // });
-        })
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.employee && changes.employee.currentValue) {
+      this.Init();
     }
+  }
+
+  Init(){
+    if(this.employee){
+      this.employeesService.getEmployeeToEdit(this.employee?.id).subscribe(response => {
+        this.editEmployee = response
+        this.form.patchValue({
+          firstName: response.firstName,
+          lastName: response.lastName,
+          middleName: response.middleName,
+          birthDate: response.birthDate,
+          departmentId: response.departmentId,
+          salary: response.salary
+        })
+      })
+      this.departmentsService.getDepartments().subscribe(response => {
+        this.departments = response.departments
+      })
+    }
+  }
+
+  submit(){
+    Object.keys(this.form.controls).forEach(key => {
+      const control = this.form.get(key);
+      control?.markAsTouched();
+    });
+    if (this.form.valid) {
+      this.editEmployee = {
+        firstName: this.form.value.firstName || '',
+        lastName: this.form.value.lastName || '',
+        middleName: this.form.value.middleName || '',
+        birthDate: this.form.value.birthDate || '',
+        departmentId: this.form.value.departmentId || 0,
+        salary: this.form.value.salary || 0,
+      };
   
-    submit(){
-      Object.keys(this.form.controls).forEach(key => {
-        const control = this.form.get(key);
-        control?.markAsTouched();
+      this.employeesService.editEmployee(this.editEmployee).subscribe(() => {
+        this.employeeEdited.emit();
+        this.modalService.close();
       });
-      if (this.form.valid) {
-        this.editEmployee = {
-          firstName: this.form.value.firstName || '',
-          lastName: this.form.value.lastName || '',
-          middleName: this.form.value.middleName || '',
-          birthDate: this.form.value.birthDate || '',
-          departmentId: this.form.value.departmentId || 0,
-          salary: this.form.value.salary || 0,
-        };
-    
-        this.employeesService.editEmployee(this.editEmployee).subscribe(() => {
-          this.employeeEdited.emit();
-          this.modalService.close();
-        });
-      }
     }
+  }
 }
